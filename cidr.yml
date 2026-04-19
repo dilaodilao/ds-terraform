@@ -1,0 +1,9 @@
+cidr:
+ au:
+   admin-vpc: 10.1.0.0/16
+   application-vpc: 10.100.0.0/16
+   media-vpc: 10.200.0.0/16
+ devops:
+   admin-vpc: 172.16.0.0/16
+   application-vpc: 172.17.0.0/16
+   media-vpc: 172.18.0.0/16

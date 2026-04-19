@@ -1,0 +1,9 @@
+azs:
+  apse2:
+    - ap-southeast-2a
+    - ap-southeast-2b
+    - ap-southeast-2c
+  use2:
+    - us-east-2a
+    - us-east-2b
+    - us-east-2c
