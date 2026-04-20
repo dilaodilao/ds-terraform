@@ -1,9 +1,86 @@
 cidr:
- au:
-   admin-vpc: 10.1.0.0/16
-   application-vpc: 10.100.0.0/16
-   media-vpc: 10.200.0.0/16
- devops:
-   admin-vpc: 172.16.0.0/16
-   application-vpc: 172.17.0.0/16
-   media-vpc: 172.18.0.0/16
+  staging:
+    us-east-1:
+      ds-us-east-1-admin-staging: 10.1.0.0/16
+      ds-us-east-1-media-staging: 10.3.0.0/16
+      ds-us-east-1-application: 10.21.0.0/16
+      ds-us-east-1-api-staging: 10.2.0.0/16
+      ds-us-east-1-rancher-admin: 10.20.0.0/16
+  sweden:
+    eu-north-1:
+      ds-eu-north-1-admin-prodse: 10.6.0.0/16
+      ds-eu-north-1-application-prodse: 10.7.0.0/16
+      ds-eu-north-1-video-prodse: 10.3.0.0/16
+  security:
+    us-east-1:
+      project-vpc: 10.0.0.0/16
+  icarus:
+    us-east-2:
+      icarus: 10.0.0.0/16
+  eu:
+    eu-central-1:
+      ds-eu-central-1-video: 10.3.0.0/16
+      ds-eu-central-1-rancher-admin: 10.6.0.0/16
+      ds-eu-central-1-application: 10.7.0.0/16
+  ca:
+    ca-central-1:
+      ds-us-east-1-video-production: 10.3.0.0/16
+      ds-ca-central-1-rancher-admin-prodca: 10.6.0.0/16
+      ds-ca-central-1-application-prodca: 10.7.0.0/16
+  uk:
+    eu-west-2:
+      ds-us-west-2-rancher-admin-produk: 10.6.0.0/16
+      ds-us-east-1-media-production: 10.3.0.0/16
+      ds-us-west-2-application-produk: 10.7.0.0/16
+  ea:
+    us-east-1:
+      network-admin: 10.4.0.0/16
+      network-application: 10.5.0.0/16
+      network-video: 10.3.0.0/16
+  dmz:
+    us-east-1:
+      ds-dmz-network-vpc-east: 172.20.0.0/16
+      ds-dmz-tailscale-testing-east-vpc: 172.40.0.0/16
+    us-west-2:
+      ds-dmz-network-west-2-vpc: 172.30.0.0/16
+  dev:
+    us-east-1:
+      ds-us-east-1-api-dev: 10.2.0.0/16
+      ds-us-east-1-admin-dev: 10.1.0.0/16
+      ds-us-east-1-media-dev: 10.3.0.0/16
+      photon-us-east-1: 10.51.0.0/16
+      ds-us-east-1-application: 10.11.0.0/16
+      ds-us-east-1-rancher-admin: 10.10.0.0/16
+    us-east-2:
+      ds-us-east-2-application-qa: 10.7.0.0/16
+      icarus-dev-vpc: 10.0.0.0/16
+      ds-us-east-2-rancher-admin-qa: 10.6.0.0/16
+    us-west-1:
+      photon-us-west-1: 10.50.0.0/16
+    us-west-2:
+      ds-us-west-1-admin-devops: 10.1.0.0/16
+      ds-us-west-2-rancher-admin-devops: 10.4.0.0/16
+      ds-us-east-1-media-devops: 10.3.0.0/16
+      ds-us-west-2-application-devops: 10.5.0.0/16
+      ds-us-west-2-application-dev: 10.20.0.0/16
+      ds-us-east-1-api-devops: 10.2.0.0/16
+  prod:
+    us-east-1:
+      ds-us-east-1-application-production: 10.5.0.0/16
+      ds-us-east-1-admin-production: 10.1.0.0/16
+      ds-us-east-1-media: 10.3.0.0/16
+      ds-us-east-1-prodapi: 10.2.0.0/16
+      ds-us-east-1-rancher-admin-production: 10.4.0.0/16
+      ds-us-east-1-media-production: 10.3.0.0/16
+      ds-us-east-1-api-production: 10.2.0.0/16
+      ds-us-east-1-admin: 10.1.0.0/16
+  build:
+    us-east-1:
+      dronesense-build-vpc-us-east-1: 10.12.0.0/16
+      photon-build-us-east-1: 10.40.0.0/16
+      photon-us-east-1: 10.30.0.0/16
+  au:
+    ap-southeast-2:
+      admin: 10.1.0.0/16
+      application-vpc: 10.100.0.0/16
+      media-vpc: 10.200.0.0/16
