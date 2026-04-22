@@ -16,7 +16,19 @@ locals {
   azs        = include.root.locals.def.azs[include.root.locals.def.rgn]
 
   additional_tags = {}
-}
+
+  ips        = [
+    "72.183.145.213/32",
+    "136.49.7.73/32",
+    "44.208.156.241/32",
+    "34.202.15.239/32",
+    "34.206.212.201/32",
+    "44.199.49.168/32",
+    "34.212.50.86/32",
+    "172.127.49.214/32"
+  ]
+
+  ips_csv = join( ",", local.ip )
 
 dependency "admin-vpc" {
   config_path = "../../../../vpc/apse2/admin"
@@ -36,121 +48,24 @@ inputs = {
   description = "Security Group for Load Balancer RANCHER"
   tags        = merge( include.root.locals.default_tags, local.additional_tags )
 
-
   ingress_with_cidr_blocks = [
     {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "72.183.145.213/32"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      description = "HTTP Access"
+      cidr_blocks = local.ips_csv
     },
     {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "136.49.7.73/32"
-    },
-    {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "44.208.156.241/32"
-    },
-    {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "34.202.15.239/32"
-    },
-    {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "34.206.212.201/32"
-    },
-    {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "44.199.49.168/32"
-    },
-    {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "34.212.50.86/32"
-    },
-    {
-        from_port = 80,
-        to_port = 80,
-        protocol = "tcp",
-        description = "HTTP",
-        cidr_blocks = "172.127.49.214/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "72.183.145.213/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "136.49.7.73/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "44.208.156.241/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "34.202.15.239/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "34.206.212.201/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "44.199.49.168/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "34.212.50.86/32"
-    },
-    {
-        from_port = 443,
-        to_port = 443,
-        protocol = "tcp",
-        description = "HTTPS",
-        cidr_blocks = "172.127.49.214/32"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      description = "HTTPS Access"
+      cidr_blocks = local.ips_csv
     }
-]
+  ]
+
+
 
   egress_with_cidr_blocks = [
     {
