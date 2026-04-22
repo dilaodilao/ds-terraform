@@ -33,6 +33,7 @@ locals {
     s3        = "5.12.0"
     vpc       = "5.1.0"
     dynamodb  = "5.5.0"
+    security_group = "5.3.1"
   } 
 
 
