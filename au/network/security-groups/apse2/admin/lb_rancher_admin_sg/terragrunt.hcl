@@ -28,7 +28,10 @@ locals {
     "172.127.49.214/32"
   ]
 
-  ips_csv = join( ",", local.ip )
+  ips_csv = join( ",", local.ips )
+}
+
+
 
 dependency "admin-vpc" {
   config_path = "../../../../vpc/apse2/admin"
