@@ -64,7 +64,7 @@ inputs = {
         to_port = 0,
         protocol = "all",
         description = "application-vpc",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+        cidr_blocks = dependency.application-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 3478,

@@ -43,7 +43,7 @@ inputs = {
         to_port = 6379,
         protocol = "tcp",
         description = "Redis",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+        cidr_blocks = dependency.application-vpc.outputs.vpc_cidr_block
     }
 ]
 

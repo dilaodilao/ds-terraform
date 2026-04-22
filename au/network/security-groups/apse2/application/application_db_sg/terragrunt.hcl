@@ -43,28 +43,28 @@ inputs = {
         to_port = 1433,
         protocol = "tcp",
         description = "MSSQL Server",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+        cidr_blocks = dependency.application-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 1433,
         to_port = 1433,
         protocol = "tcp",
         description = "MSSQL Server",
-        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
+        cidr_blocks = dependency.admin-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 3306,
         to_port = 3306,
         protocol = "tcp",
         description = "MySQL/Aurora",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+        cidr_blocks = dependency.application-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 3306,
         to_port = 3306,
         protocol = "tcp",
         description = "MySQL/Aurora",
-        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
+        cidr_blocks = dependency.admin-vpc.outputs.vpc_cidr_block
     }
 ]
 

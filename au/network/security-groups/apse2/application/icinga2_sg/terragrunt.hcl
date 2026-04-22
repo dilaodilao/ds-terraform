@@ -43,21 +43,21 @@ inputs = {
         to_port = 0,
         protocol = "all",
         description = "icinga2",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+        cidr_blocks = dependency.application-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 0,
         to_port = 0,
         protocol = "all",
         description = "icinga2",
-        cidr_blocks = dependency.video-vpc.outputs.vpc_id
+        cidr_blocks = dependency.video-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 0,
         to_port = 0,
         protocol = "all",
         description = "icinga2",
-        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
+        cidr_blocks = dependency.admin-vpc.outputs.vpc_cidr_block
     }
 ]
 

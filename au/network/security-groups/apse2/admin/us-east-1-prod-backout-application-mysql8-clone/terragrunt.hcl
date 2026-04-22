@@ -50,7 +50,7 @@ inputs = {
         to_port = 3306,
         protocol = "tcp",
         description = "Allow inbound MySQL traffic",
-        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
+        cidr_blocks = dependency.admin-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 3306,

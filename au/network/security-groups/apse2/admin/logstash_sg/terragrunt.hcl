@@ -50,14 +50,14 @@ inputs = {
         to_port = 5044,
         protocol = "tcp",
         description = "LogStash",
-        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
+        cidr_blocks = dependency.admin-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 5044,
         to_port = 5044,
         protocol = "tcp",
         description = "LogStash",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+        cidr_blocks = dependency.application-vpc.outputs.vpc_cidr_block
     },
     {
         from_port = 2376,

@@ -50,7 +50,7 @@ inputs = {
         to_port = 443,
         protocol = "tcp",
         description = "GuardDuty managed security group inbound rule associated with VPC vpc-0afe35d3d7981463c",
-        cidr_blocks = dependency.video-vpc.outputs.vpc_id
+        cidr_blocks = dependency.video-vpc.outputs.vpc_cidr_block
     }
 ]
 

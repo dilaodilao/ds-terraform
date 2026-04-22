@@ -66,9 +66,9 @@ def create_terragrunt_file(path, sg, vpc_id):
     egress_hcl = format_hcl_list(egress_rules)
 
     replace_string = {
-        '"10.4.0.0/16"': "dependency.admin-vpc.outputs.vpc_id",
-        '"10.5.0.0/16"': "dependency.application-vpc.outputs.vpc_id",
-        '"10.3.0.0/16"': "dependency.video-vpc.outputs.vpc_id"
+        '"10.4.0.0/16"': "dependency.admin-vpc.outputs.vpc_cidr_block",
+        '"10.5.0.0/16"': "dependency.application-vpc.outputs.vpc_cidr_block",
+        '"10.3.0.0/16"': "dependency.video-vpc.outputs.vpc_cidr_block"
     }
 
     for i in replace_string:
