@@ -16,6 +16,8 @@ locals {
   env         = include.root.locals.def.env
   name        = basename(get_terragrunt_dir())
   azs         = include.root.locals.def.azs[include.root.locals.def.rgn]
+
+  additional_tags = { }
 }
 
 inputs = {
@@ -29,6 +31,8 @@ inputs = {
   enable_nat_gateway = true
   one_nat_gateway_per_az = true
   enable_vpn_gateway = false
+
+  tags = merge( include.root.locals.default_tags, local.additional_tags )
 
 
 #  manage_default_network_acl = true

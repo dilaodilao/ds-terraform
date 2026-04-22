@@ -32,8 +32,8 @@ dependency "video-vpc" {
 
 inputs = {
   name        = local.name
-  vpc_id      = dependency.application-vpc.outputs.vpc_id
-  description = "Security Group for dfrdock"
+  vpc_id      = dependency.video-vpc.outputs.vpc_id
+  description = "Security Group for mediamtx"
   tags        = merge( include.root.locals.default_tags, local.additional_tags )
 
 
@@ -42,42 +42,84 @@ inputs = {
         from_port = 80,
         to_port = 80,
         protocol = "tcp",
-        description = "dfrdock",
+        description = "mediamtx",
         cidr_blocks = "0.0.0.0/0"
     },
     {
         from_port = 9000,
         to_port = 9000,
         protocol = "tcp",
-        description = "dfrdock",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 1935,
+        to_port = 1936,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8888,
+        to_port = 8889,
+        protocol = "tcp",
+        description = "mediamtx",
         cidr_blocks = "0.0.0.0/0"
     },
     {
         from_port = 0,
         to_port = 0,
         protocol = "all",
-        description = "dfrdock internal",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+        description = "mediamtx",
+        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
     },
     {
         from_port = 0,
         to_port = 0,
         protocol = "all",
-        description = "dfrdock internal",
-        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
+        description = "mediamtx",
+        cidr_blocks = dependency.video-vpc.outputs.vpc_id
+    },
+    {
+        from_port = 0,
+        to_port = 0,
+        protocol = "all",
+        description = "mediamtx",
+        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+    },
+    {
+        from_port = 8332,
+        to_port = 8332,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 9998,
+        to_port = 9999,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
     },
     {
         from_port = 60000,
         to_port = 60999,
         protocol = "udp",
-        description = "dfrdock control",
+        description = "mediamtx",
         cidr_blocks = "0.0.0.0/0"
     },
     {
-        from_port = 1337,
-        to_port = 1337,
+        from_port = 443,
+        to_port = 443,
         protocol = "tcp",
-        description = "dfrdock ssl",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8000,
+        to_port = 8003,
+        protocol = "udp",
+        description = "mediamtx",
         cidr_blocks = "0.0.0.0/0"
     }
 ]

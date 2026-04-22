@@ -32,52 +32,87 @@ dependency "video-vpc" {
 
 inputs = {
   name        = local.name
-  vpc_id      = dependency.application-vpc.outputs.vpc_id
-  description = "Security Group for dfrdock"
+  vpc_id      = dependency.video-vpc.outputs.vpc_id
+  description = "Security Group for ds-video"
   tags        = merge( include.root.locals.default_tags, local.additional_tags )
 
 
   ingress_with_cidr_blocks = [
     {
-        from_port = 80,
-        to_port = 80,
+        from_port = 7088,
+        to_port = 7088,
         protocol = "tcp",
-        description = "dfrdock",
-        cidr_blocks = "0.0.0.0/0"
-    },
-    {
-        from_port = 9000,
-        to_port = 9000,
-        protocol = "tcp",
-        description = "dfrdock",
-        cidr_blocks = "0.0.0.0/0"
-    },
-    {
-        from_port = 0,
-        to_port = 0,
-        protocol = "all",
-        description = "dfrdock internal",
+        description = "admin port from api VPC",
         cidr_blocks = dependency.application-vpc.outputs.vpc_id
     },
     {
-        from_port = 0,
-        to_port = 0,
-        protocol = "all",
-        description = "dfrdock internal",
-        cidr_blocks = dependency.admin-vpc.outputs.vpc_id
+        from_port = 7088,
+        to_port = 7088,
+        protocol = "tcp",
+        description = "admin port from api VPC",
+        cidr_blocks = "10.2.0.0/16"
     },
     {
-        from_port = 60000,
-        to_port = 60999,
-        protocol = "udp",
-        description = "dfrdock control",
+        from_port = 7088,
+        to_port = 7088,
+        protocol = "tcp",
+        description = "temp",
+        cidr_blocks = "72.183.145.213/32"
+    },
+    {
+        from_port = 80,
+        to_port = 80,
+        protocol = "tcp",
+        description = "HTTP",
         cidr_blocks = "0.0.0.0/0"
     },
     {
-        from_port = 1337,
-        to_port = 1337,
+        from_port = 25000,
+        to_port = 50000,
         protocol = "tcp",
-        description = "dfrdock ssl",
+        description = "ports for video",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 0,
+        to_port = 0,
+        protocol = "all",
+        description = "application-vpc",
+        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+    },
+    {
+        from_port = 25000,
+        to_port = 50000,
+        protocol = "udp",
+        description = "ports for video",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8500,
+        to_port = 8600,
+        protocol = "udp",
+        description = "ports for video",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 20000,
+        to_port = 25000,
+        protocol = "udp",
+        description = "ports for video",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 443,
+        to_port = 443,
+        protocol = "tcp",
+        description = "HTTPS",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8500,
+        to_port = 8600,
+        protocol = "tcp",
+        description = "ports for video",
         cidr_blocks = "0.0.0.0/0"
     }
 ]

@@ -14,19 +14,28 @@ locals {
   env        = include.root.locals.def.env
   name       = basename(get_terragrunt_dir())
   azs        = include.root.locals.def.azs[include.root.locals.def.rgn]
-}
 
+  additional_tags = {}
+}
 
 dependency "admin-vpc" {
   config_path = "../../../../vpc/apse2/admin"
 }
 
+dependency "application-vpc" {
+  config_path = "../../../../vpc/apse2/application"
+}
 
+dependency "video-vpc" {
+  config_path = "../../../../vpc/apse2/video"
+}
 
 inputs = {
-  name        = "admin_base_sg"
+  name        = local.name
   vpc_id      = dependency.admin-vpc.outputs.vpc_id
   description = "Security group for all instances in admin vpc"
+  tags        = merge( include.root.locals.default_tags, local.additional_tags )
+
 
   ingress_with_cidr_blocks = []
 
@@ -38,6 +47,5 @@ inputs = {
         description = "All protocols",
         cidr_blocks = "0.0.0.0/0"
     }
-  ]
-  tags = include.root.locals.default_tags
+]
 }

@@ -9,20 +9,43 @@ include "root" {
 
 # easy reading of variables
 locals {
-  cidr_block = include.root.locals.def.cidr[include.root.locals.def.env][include.root.locals.def.region][basename(get_terragrunt_dir())]
   region     = include.root.locals.def.region
   rgn        = include.root.locals.def.rgn
   env        = include.root.locals.def.env
   name       = basename(get_terragrunt_dir())
   azs        = include.root.locals.def.azs[include.root.locals.def.rgn]
+
+  additional_tags = {}
+}
+
+dependency "admin-vpc" {
+  config_path = "../../../../vpc/apse2/admin"
+}
+
+dependency "application-vpc" {
+  config_path = "../../../../vpc/apse2/application"
+}
+
+dependency "video-vpc" {
+  config_path = "../../../../vpc/apse2/video"
 }
 
 inputs = {
-  name        = "api_base_sg"
-  vpc_id      = "vpc-02cfba27738c5fb6b"
-  description = "Security group for all instances in application vpc"
+  name        = local.name
+  vpc_id      = dependency.video-vpc.outputs.vpc_id
+  description = "Security Group for APP API"
+  tags        = merge( include.root.locals.default_tags, local.additional_tags )
 
-  ingress_with_cidr_blocks = []
+
+  ingress_with_cidr_blocks = [
+    {
+        from_port = 5000,
+        to_port = 10000,
+        protocol = "tcp",
+        description = "ports for iperf",
+        cidr_blocks = "0.0.0.0/0"
+    }
+]
 
   egress_with_cidr_blocks = [
     {

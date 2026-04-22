@@ -4,6 +4,9 @@ import os
 import re
 import json
 
+
+
+
 def get_clean_name(sg):
     """Determines the directory name and strips the _sg-[digits] suffix."""
     name = sg.get('GroupName', 'unknown_sg')
@@ -62,6 +65,17 @@ def create_terragrunt_file(path, sg, vpc_id):
     ingress_hcl = format_hcl_list(ingress_rules)
     egress_hcl = format_hcl_list(egress_rules)
 
+    replace_string = {
+        '"10.4.0.0/16"': "dependency.admin-vpc.outputs.vpc_id",
+        '"10.5.0.0/16"': "dependency.application-vpc.outputs.vpc_id",
+        '"10.3.0.0/16"': "dependency.video-vpc.outputs.vpc_id"
+    }
+
+    for i in replace_string:
+        ingress_hcl = ingress_hcl.replace( i, replace_string[i] )
+        egress_hcl = egress_hcl.replace( i, replace_string[i] )
+
+
     content = f'''terraform {{
   source = "tfr:///terraform-aws-modules/security-group/aws?version=${{include.root.locals.terraform_module_versions.security_group}}"
 }}
@@ -73,18 +87,33 @@ include "root" {{
 
 # easy reading of variables
 locals {{
-  cidr_block = include.root.locals.def.cidr[include.root.locals.def.env][include.root.locals.def.region][basename(get_terragrunt_dir())]
   region     = include.root.locals.def.region
   rgn        = include.root.locals.def.rgn
   env        = include.root.locals.def.env
   name       = basename(get_terragrunt_dir())
   azs        = include.root.locals.def.azs[include.root.locals.def.rgn]
+
+  additional_tags = {{}}
+}}
+
+dependency "admin-vpc" {{
+  config_path = "../../../../vpc/apse2/admin"
+}}
+
+dependency "application-vpc" {{
+  config_path = "../../../../vpc/apse2/application"
+}}
+
+dependency "video-vpc" {{
+  config_path = "../../../../vpc/apse2/video"
 }}
 
 inputs = {{
-  name        = "{os.path.basename(path)}"
-  vpc_id      = "{vpc_id}"
+  name        = local.name
+  vpc_id      = dependency.{vpc_id}-vpc.outputs.vpc_id
   description = "{sg.get('Description', 'Security group managed by Terragrunt')}"
+  tags        = merge( include.root.locals.default_tags, local.additional_tags )
+
 
   ingress_with_cidr_blocks = {ingress_hcl}
 
@@ -97,14 +126,14 @@ inputs = {{
 def main():
     parser = argparse.ArgumentParser(description='Generate Terragrunt files from VPC Security Groups.')
     parser.add_argument('--vpc', required=True, help='The VPC ID to search in')
-    parser.add_argument('--region', required=True, help='The AWS region (e.g., us-east-1)')
+    parser.add_argument('--vvv', required=True, help='The VPC ID to search in')
     args = parser.parse_args()
 
     # Initialize client with specified region
-    ec2 = boto3.client('ec2', region_name=args.region)
+    ec2 = boto3.client('ec2', region_name='us-east-1')
 
     try:
-        print(f"🔍 Searching region {args.region} for VPC: {args.vpc}...")
+        print(f"🔍 Searching region us-east-1 for VPC: {args.vpc}...")
         response = ec2.describe_security_groups(
             Filters=[{'Name': 'vpc-id', 'Values': [args.vpc]}]
         )
@@ -117,7 +146,7 @@ def main():
             if not os.path.exists(folder_name):
                 os.makedirs(folder_name)
             
-            create_terragrunt_file(folder_name, sg, args.vpc)
+            create_terragrunt_file(folder_name, sg, args.vvv)
             print(f"📄 Generated {folder_name}/terragrunt.hcl")
 
     except Exception as e:

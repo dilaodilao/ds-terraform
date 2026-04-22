@@ -32,65 +32,114 @@ dependency "video-vpc" {
 
 inputs = {
   name        = local.name
-  vpc_id      = dependency.application-vpc.outputs.vpc_id
-  description = "Security Group for Stun Turn"
+  vpc_id      = dependency.video-vpc.outputs.vpc_id
+  description = "Security Group for APP API"
   tags        = merge( include.root.locals.default_tags, local.additional_tags )
 
 
   ingress_with_cidr_blocks = [
     {
-        from_port = 3478,
-        to_port = 3478,
-        protocol = "udp",
+        from_port = 7088,
+        to_port = 7088,
+        protocol = "tcp",
         description = "ports for video",
-        cidr_blocks = "0.0.0.0/0"
-    },
-    {
-        from_port = 80,
-        to_port = 80,
-        protocol = "udp",
-        description = "ports for video",
-        cidr_blocks = "0.0.0.0/0"
+        cidr_blocks = "10.11.0.0/16"
     },
     {
         from_port = 80,
         to_port = 80,
         protocol = "tcp",
-        description = "ports for video",
+        description = "HTTP",
         cidr_blocks = "0.0.0.0/0"
     },
     {
-        from_port = 0,
-        to_port = 0,
-        protocol = "all",
-        description = "application-vpc",
-        cidr_blocks = dependency.application-vpc.outputs.vpc_id
-    },
-    {
-        from_port = 3478,
-        to_port = 3478,
+        from_port = 25000,
+        to_port = 50000,
         protocol = "tcp",
         description = "ports for video",
         cidr_blocks = "0.0.0.0/0"
     },
     {
-        from_port = 443,
-        to_port = 443,
+        from_port = 9997,
+        to_port = 9999,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 25000,
+        to_port = 50000,
         protocol = "udp",
         description = "ports for video",
         cidr_blocks = "0.0.0.0/0"
     },
     {
+        from_port = 8500,
+        to_port = 8600,
+        protocol = "udp",
+        description = "ports for video",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8554,
+        to_port = 8554,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
         from_port = 443,
         to_port = 443,
         protocol = "tcp",
-        description = "ports for video",
+        description = "HTTPS",
         cidr_blocks = "0.0.0.0/0"
     },
     {
         from_port = 20000,
         to_port = 25000,
         protocol = "udp",
+        description = "ports for video",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8000,
+        to_port = 8003,
+        protocol = "udp",
+        description = "mediaMTX",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 9000,
+        to_port = 9000,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 1935,
+        to_port = 1936,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8888,
+        to_port = 8889,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8332,
+        to_port = 8332,
+        protocol = "tcp",
+        description = "mediamtx",
+        cidr_blocks = "0.0.0.0/0"
+    },
+    {
+        from_port = 8500,
+        to_port = 8600,
+        protocol = "tcp",
         description = "ports for video",
         cidr_blocks = "0.0.0.0/0"
     }

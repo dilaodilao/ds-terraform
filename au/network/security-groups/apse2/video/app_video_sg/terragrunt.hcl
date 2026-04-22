@@ -32,67 +32,67 @@ dependency "video-vpc" {
 
 inputs = {
   name        = local.name
-  vpc_id      = dependency.admin-vpc.outputs.vpc_id
-  description = "Security group for nessus host"
+  vpc_id      = dependency.video-vpc.outputs.vpc_id
+  description = "Security Group for APP API"
   tags        = merge( include.root.locals.default_tags, local.additional_tags )
 
 
   ingress_with_cidr_blocks = [
     {
-        from_port = 8834,
-        to_port = 8834,
+        from_port = 7088,
+        to_port = 7088,
         protocol = "tcp",
-        description = "Nessus Port",
+        description = "admin port from api VPC",
+        cidr_blocks = "10.2.0.0/16"
+    },
+    {
+        from_port = 7088,
+        to_port = 7088,
+        protocol = "tcp",
+        description = "admin port from api VPC",
+        cidr_blocks = dependency.application-vpc.outputs.vpc_id
+    },
+    {
+        from_port = 7088,
+        to_port = 7088,
+        protocol = "tcp",
+        description = "Eric IP",
+        cidr_blocks = "136.49.173.145/32"
+    },
+    {
+        from_port = 7088,
+        to_port = 7088,
+        protocol = "tcp",
+        description = "janus command interface Robert",
         cidr_blocks = "72.183.145.213/32"
     },
     {
-        from_port = 8834,
-        to_port = 8834,
+        from_port = 80,
+        to_port = 80,
         protocol = "tcp",
-        description = "Nessus Port",
-        cidr_blocks = "136.49.7.73/32"
+        description = "HTTP",
+        cidr_blocks = "0.0.0.0/0"
     },
     {
-        from_port = 8834,
-        to_port = 8834,
-        protocol = "tcp",
-        description = "Nessus Port",
-        cidr_blocks = "44.208.156.241/32"
+        from_port = 0,
+        to_port = 0,
+        protocol = "all",
+        description = "application-vpc",
+        cidr_blocks = dependency.application-vpc.outputs.vpc_id
     },
     {
-        from_port = 8834,
-        to_port = 8834,
-        protocol = "tcp",
-        description = "Nessus Port",
-        cidr_blocks = "34.202.15.239/32"
+        from_port = 20000,
+        to_port = 25000,
+        protocol = "udp",
+        description = "ports for video",
+        cidr_blocks = "0.0.0.0/0"
     },
     {
-        from_port = 8834,
-        to_port = 8834,
+        from_port = 443,
+        to_port = 443,
         protocol = "tcp",
-        description = "Nessus Port",
-        cidr_blocks = "34.206.212.201/32"
-    },
-    {
-        from_port = 8834,
-        to_port = 8834,
-        protocol = "tcp",
-        description = "Nessus Port",
-        cidr_blocks = "44.199.49.168/32"
-    },
-    {
-        from_port = 8834,
-        to_port = 8834,
-        protocol = "tcp",
-        description = "Nessus Port",
-        cidr_blocks = "34.212.50.86/32"
-    },
-    {
-        from_port = 8834,
-        to_port = 8834,
-        protocol = "tcp",
-        description = "Nessus Port",
-        cidr_blocks = "172.127.49.214/32"
+        description = "HTTPS",
+        cidr_blocks = "0.0.0.0/0"
     }
 ]
 
