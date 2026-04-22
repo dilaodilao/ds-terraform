@@ -82,5 +82,5 @@ cidr:
   au:
     ap-southeast-2:
       admin: 10.1.0.0/16
-      application-vpc: 10.100.0.0/16
-      media-vpc: 10.200.0.0/16
+      application: 10.100.0.0/16
+      video: 10.200.0.0/16
