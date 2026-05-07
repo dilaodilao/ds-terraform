@@ -1,0 +1,59 @@
+<<<<<<< Updated upstream
+=======
+#variable & function explanations
+/*
+- basename(get_terragrunt_dir())
+returns the name of the current working directory
+
+
+- basename(dirname(get_terragrunt_dir())) 
+will return the directory above the current working directory
+so if the path is ../apse2/admin---application/terragrunt.hcl
+it will return apse2
+*/
+
+
+
+
+
+
+>>>>>>> Stashed changes
+terraform {
+  source = "tfr:///terraform-aws-modules/vpc/aws?version=${include.root.locals.terraform_module_versions.XXX}"
+}
+
+include "root" {
+  path = find_in_parent_folders("root.hcl")
+  expose = true
+
+}
+
+<<<<<<< Updated upstream
+=======
+
+
+
+
+>>>>>>> Stashed changes
+#easy reading of variables
+locals {
+  region      = include.root.locals.def.region
+  rgn         = include.root.locals.def.rgn
+  env         = include.root.locals.def.env
+  name        = basename(get_terragrunt_dir())
+
+  additional_tags = { }
+<<<<<<< Updated upstream
+=======
+
+  repo_root = get_repo_root()
+>>>>>>> Stashed changes
+}
+
+inputs = {
+
+  name = "ds-${local.region}-${local.name}-${local.env}"
+
+  tags = merge( include.root.locals.default_tags, local.additional_tags )
+
+}
